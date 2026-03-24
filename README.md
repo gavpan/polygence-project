@@ -1,2 +1,2 @@
-# polygence-project
+# SchedZen
 My Polygence project
