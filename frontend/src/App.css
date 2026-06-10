@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  background-color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 55px;
+}
+
+.navbar h2 {
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 35px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.signin-btn {
+  padding: 9px 28px;
+  border-radius: 7px;
+  border: 2px solid #7b2cff;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+}
+
+.hero {
+  text-align: center;
+  margin-top: 130px;
+}
+
+.hero h1 {
+  font-size: 66px;
+  margin: 0;
+  background: linear-gradient(to right, #ff00ff, #5b00d6);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero h2 {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 35px;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.4;
+  color: #dcdcdc;
+}
+
+.start-btn {
+  margin-top: 60px;
+  padding: 16px 38px;
+  border: none;
+  border-radius: 7px;
+  background: linear-gradient(to bottom, #8b4dff, #5b00c9);
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+}
