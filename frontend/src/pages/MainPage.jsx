@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 
 function MainPage() {
+  const navigate = useNavigate();
+
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
   const [message, setMessage] = useState("");
 
   const [messages, setMessages] = useState([
@@ -13,6 +17,36 @@ function MainPage() {
   ]);
 
   const [schedule] = useState([]);
+
+  // On page load, confirm the user actually has a valid token.
+  // If not, send them to the sign-in page instead of showing the chat.
+  useEffect(function () {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+
+    fetch("http://127.0.0.1:5000/profile", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Invalid token");
+        }
+        return response.json();
+      })
+      .then(function () {
+        setCheckingAuth(false);
+      })
+      .catch(function () {
+        localStorage.removeItem("token");
+        navigate("/signin");
+      });
+  }, [navigate]);
 
   async function sendMessage() {
     if (message.trim() === "") {
@@ -71,6 +105,21 @@ function MainPage() {
     }
   }
 
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/signin");
+  }
+
+  // While we're checking the token against the backend, don't flash
+  // the chat UI at all — just show a simple loading state.
+  if (checkingAuth) {
+    return (
+      <div className="main-chat-page">
+        <p style={{ padding: "40px", textAlign: "center" }}>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="main-chat-page">
       <div className="top-bar">
@@ -83,6 +132,18 @@ function MainPage() {
         <p className="small-logo">
           SchedZen
         </p>
+
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Link to="/profile">
+            <button className="home-button">
+              Profile
+            </button>
+          </Link>
+
+          <button className="home-button" onClick={handleLogout}>
+            Log Out
+          </button>
+        </div>
       </div>
 
       <div className="main-layout">
